@@ -1,19 +1,28 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
-import { ShoppingListScreen } from "./screens/ShoppingListScreen";
-import { MapScreen } from "./screens/MapScreen";
-import { SettingsScreen } from "./screens/SettingsScreen";
+import ShoppingListScreen from "./screens/ShoppingListScreen";
+import { useState } from "react";
+import DarkTheme from "./styles/Themes/DarkTheme";
+import LightTheme from "./styles/Themes/LightTheme";
+import HomeScreen from "./screens/HomeScreen";
+import { LogBox } from 'react-native';
+import { RootStackParamList } from "./models/NavigationData";
 
-const Drawer = createDrawerNavigator();
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Shopping List" component={ShoppingListScreen} />
-        <Drawer.Screen name="Map" component={MapScreen} />
-        <Drawer.Screen name="Setting" component={SettingsScreen} />
-      </Drawer.Navigator>
+    <NavigationContainer theme={isDarkTheme ? DarkTheme : LightTheme}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Shopping List" component={ShoppingListScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
