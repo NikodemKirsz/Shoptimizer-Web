@@ -1,6 +1,5 @@
 ﻿import { Text, View } from "react-native";
 import { useStyles } from "../hooks";
-import React from "react";
 import { Icon } from "../components/Icon";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../models/NavigationData";

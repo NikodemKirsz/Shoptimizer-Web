@@ -8,6 +8,11 @@ const getStyles = (colors: GlobalColors) => ({
       flex: 1,
       alignItems: 'center',
     },
+    fullContainer: {
+      alignItems: 'center',
+      width: "100%",
+      height: "100%",
+    },
     input: {
       padding: 8,
       borderColor: colors.background,

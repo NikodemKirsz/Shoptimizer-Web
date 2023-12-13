@@ -1,8 +1,8 @@
-﻿import { DimensionValue, Image, ImageStyle, Pressable, Text, View } from "react-native";
+﻿import { DimensionValue, Text, View } from "react-native";
 import { useStyles } from "../hooks";
-import { clamp } from "../logic/helpers";
 import { Icon } from "./Icon";
 import MyPressable from "./MyPressable";
+import { clamp } from "../logic/numberHelpers";
 
 interface AmounterProps {
   value: number;

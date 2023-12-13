@@ -2,15 +2,13 @@
   Modal,
   Pressable,
   StyleProp,
-  TouchableHighlight,
   TouchableWithoutFeedback,
   View,
   ViewStyle
 } from "react-native";
 import { useStyles } from "../hooks";
-import React, { ReactNode } from "react";
-import { combine } from "../logic/helpers";
-import MyPressable from "./MyPressable";
+import { ReactNode } from "react";
+import { combine } from "../logic/viewHelpers";
 
 interface MyModalProps {
   children?: ReactNode | undefined;

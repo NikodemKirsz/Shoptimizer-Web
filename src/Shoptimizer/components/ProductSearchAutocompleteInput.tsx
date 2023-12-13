@@ -5,16 +5,17 @@
   TextInput,
   Text,
   TextInputChangeEventData,
-  View,
+  View, Animated,
 } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useStyles } from "../hooks";
 import { Product } from "../models/Product";
-import { combine, delay } from "../logic/helpers";
 import { getProduct } from "../models/FakeData";
 import MyButton from "./MyButton";
 import { useDebounce } from "../hooks/useDebounce";
 import MyPressable from "./MyPressable";
+import delay = Animated.delay;
+import { combine } from "../logic/viewHelpers";
 
 type ProductSearchAutocompleteInputProps = {
   width?: DimensionValue;

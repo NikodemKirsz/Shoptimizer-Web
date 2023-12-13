@@ -4,8 +4,8 @@ import MyButton from "./MyButton";
 import { Attributes, useCallback, useEffect, useState } from "react";
 import Amounter from "./Amounter";
 import { ShoppingItem } from "../models/ShoppingItem";
-import { combine } from "../logic/helpers";
 import { useDebounce } from "../hooks/useDebounce";
+import { combine } from "../logic/viewHelpers";
 
 interface ShoppingItemViewProps extends Attributes {
   shoppingItem: ShoppingItem;

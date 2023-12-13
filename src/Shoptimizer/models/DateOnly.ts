@@ -1,4 +1,4 @@
-﻿import { pad } from "../logic/helpers";
+﻿import { pad } from "../logic/stringHelpers";
 
 class DateOnly {
   public static readonly ValuesSeparator: string = '-';

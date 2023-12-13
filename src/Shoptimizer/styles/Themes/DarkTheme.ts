@@ -14,6 +14,7 @@ const DarkTheme = {
     placeholder: '#82858a',
     descriptionText: '#9cabc2', 
     buttonBackground: '#565656',
+    strongAccent: '#b07600',
     transparent: '#00000000',
   },
 };

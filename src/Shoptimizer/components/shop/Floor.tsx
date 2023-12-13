@@ -1,37 +1,30 @@
 ﻿import { useStyles } from "../../hooks";
-import { ReactNode, useEffect, useMemo } from "react";
-import { Dimensions, useWindowDimensions, View } from "react-native";
-import MyButton from "../MyButton";
+import { ReactNode, useCallback, useMemo } from "react";
+import { View } from "react-native";
+import { RectDimensions } from "../../models/utility/RectDimensions";
 
 interface FloorProps {
-  width: number;
-  height: number;
+  floorDimensions: RectDimensions;
+  containerDimensions: RectDimensions;
   children?: ReactNode | undefined;
 }
 
 function Floor(props: FloorProps) {
-  const {width, height, children} = props;
+  const {floorDimensions, containerDimensions, children} = props;
   const {style, color} = useStyles();
   
-  const window = useWindowDimensions();
+  const calculateAbsoluteDimensions = useCallback((container: RectDimensions, floor: RectDimensions) => {
+    const floorRatio = floor.width / floor.height;
+    const windowRatio = container.width / container.height;
 
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener("change", calculateThings);
-    return subscription.remove();
+    return floorRatio > windowRatio
+      ? [container.width, floor.height * (container.width / floor.width)]
+      : [floor.width * (container.height / floor.height), container.height];
   }, []);
 
-  const calculateThings = () => {
-    const windowRatio = window.width / window.height;
-    const floorRatio = width / height;
-
-    return floorRatio < windowRatio
-      ? [window.width, (window.height * height) / window.width]
-      : [(window.width * width) / window.height, window.height];
-  }
-
   const [absoluteWidth, absoluteHeight] = useMemo(() => {
-    return calculateThings();
-  }, [window.width, window.height, window.scale, width, height]);
+    return calculateAbsoluteDimensions(containerDimensions, floorDimensions);
+  }, [containerDimensions.width, containerDimensions.height, floorDimensions.width, floorDimensions.height]);
 
   return (
     <View
@@ -47,7 +40,6 @@ function Floor(props: FloorProps) {
       }}
     >
       {!!children && children}
-      <MyButton backgroundColor={"red"} iconType={"close"} onPress={() => console.log("Window", window)}/>
     </View>
   );
 }

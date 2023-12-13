@@ -1,7 +1,6 @@
 ﻿import {
   ActivityIndicator,
   NativeSyntheticEvent,
-  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -14,10 +13,11 @@ import { getShoppingListPreview } from "../models/FakeData";
 import { useStyles } from "../hooks";
 import MyButton from "../components/MyButton";
 import MyModal from "../components/MyModal";
-import { combine, deconstructProps, trimmedOrNull } from "../logic/helpers";
 import { RootStackParamList } from "../models/NavigationData";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import MyPressable from "../components/MyPressable";
+import { combine, deconstructProps } from "../logic/viewHelpers";
+import { trimmedOrNull } from "../logic/stringHelpers";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Shopping Lists">;
 

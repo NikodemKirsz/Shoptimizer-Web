@@ -1,10 +1,8 @@
 ﻿import { useStyles } from "../hooks";
 import {
   ActivityIndicator,
-  NativeSyntheticEvent,
   ScrollView,
   Text,
-  TextInputChangeEventData,
   View
 } from "react-native";
 import ShoppingItemView from "../components/ShoppingItemView";
@@ -13,11 +11,11 @@ import { ShoppingList } from "../models/ShoppingList";
 import { getShoppingList } from "../models/FakeData";
 import MyButton from "../components/MyButton";
 import MyModal from "../components/MyModal";
-import { combine, deconstructProps } from "../logic/helpers";
 import { ShoppingItem } from "../models/ShoppingItem";
 import ProductSearchAutocompleteInput from "../components/ProductSearchAutocompleteInput";
 import { RootStackParamList } from "../models/NavigationData";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { combine, deconstructProps } from "../logic/viewHelpers";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Shopping List">;
 

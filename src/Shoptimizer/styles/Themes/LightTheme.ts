@@ -14,6 +14,7 @@ const LightTheme = {
     placeholder: '#9a9ea4',
     descriptionText: '#818892',
     buttonBackground: '#f1f3f7',
+    strongAccent: '#ffb115',
     transparent: '#00000000',
   },
 };

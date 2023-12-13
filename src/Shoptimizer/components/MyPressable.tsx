@@ -1,5 +1,5 @@
 ﻿import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native";
-import { combine } from "../logic/helpers";
+import { combine } from "../logic/viewHelpers";
 
 interface MyPressableProps extends Omit<PressableProps, "style"> {
   style: StyleProp<ViewStyle>;

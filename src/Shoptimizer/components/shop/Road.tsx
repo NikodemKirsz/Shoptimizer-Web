@@ -1,29 +1,30 @@
-﻿import { View, Text } from "react-native";
-import { useStyles } from "../../hooks";
-import { useMemo } from "react";
-import {
+﻿import {
   RectDimensions,
   RectDimensionsExtended,
   RectPosition,
   RectPositionExtended
 } from "../../models/utility/RectDimensions";
+import { useStyles } from "../../hooks";
+import { useMemo } from "react";
 import { calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
-import { combine } from "../../logic/viewHelpers";
+import { View } from "react-native";
 
-interface ShelfProps {
-  name?: string | undefined;
+interface RoadProps {
   dimensions: RectDimensions;
   position: RectPosition;
   floorDimensions: RectDimensions;
+  visible?: boolean;
 }
 
-function Shelf(props: ShelfProps) {
-  const {name, dimensions, position, floorDimensions} = props;
+function Road(props: RoadProps) {
+  let {dimensions, position, floorDimensions, visible} = props;
   const {style, color} = useStyles();
-  
+
+  visible ??= true;
+
   const [dimensionsPercent, positionPercent] = useMemo((): [RectDimensionsExtended, RectPositionExtended] => {
     const [relativeDimensions, relativePosition] = calculateRelativeValues(dimensions, position, floorDimensions);
-    
+
     return [
       {
         width: toProc(relativeDimensions.width),
@@ -36,33 +37,27 @@ function Shelf(props: ShelfProps) {
     ]
   },[
     dimensions.width,
-      dimensions.height,
-      position.top,
-      position.left,
-      floorDimensions.width,
-      floorDimensions.height,
+    dimensions.height,
+    position.top,
+    position.left,
+    floorDimensions.width,
+    floorDimensions.height,
   ]);
-  
+
   return (
     <View
       style={{
         position: "absolute",
         overflow: "hidden",
-        backgroundColor: color.listItem,
-        borderWidth: 2,
-        borderStyle: "solid",
-        borderColor: color.card,
+        backgroundColor: color.primary,
+        borderRadius: 4,
         width: dimensionsPercent.width,
         height: dimensionsPercent.height,
         left: positionPercent.left,
         top: positionPercent.top,
-    }}
-    >
-      {name && (
-        <Text style={combine(style.text, { fontSize: 12 })}>{name}</Text>
-      )}
-    </View>
+      }}
+    />
   );
 }
 
-export default Shelf;
+export default Road;

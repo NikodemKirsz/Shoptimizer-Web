@@ -7,9 +7,8 @@
 } from "react-native";
 import { useStyles } from "../hooks";
 import { Icon, KnownIcons } from "./Icon";
-import { combine } from "../logic/helpers";
-import React from "react";
 import MyPressable from "./MyPressable";
+import { combine } from "../logic/viewHelpers";
 
 type IconType = "none" | "text" | KnownIcons;
 
