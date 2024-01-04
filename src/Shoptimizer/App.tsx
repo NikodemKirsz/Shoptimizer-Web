@@ -9,7 +9,9 @@ import { LogBox } from 'react-native';
 import { RootStackParamList } from "./models/NavigationData";
 
 LogBox.ignoreLogs([
-  'Non-serializable values were found in the navigation state',
+  "Non-serializable values were found in the navigation state",
+  "(imported as 'Animated') was not found in 'react-native-reanimated'",
+  "StyleSheet.compose(a, b) is deprecated; use array syntax, i.e., [a,b]."
 ]);
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

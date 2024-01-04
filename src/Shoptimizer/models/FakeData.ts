@@ -1,5 +1,5 @@
 ﻿import { ShoppingList, ShoppingListPreview } from "./ShoppingList";
-import { Product } from "./Product";
+import { Product, SearchProduct } from "./Product";
 import DateOnly from "./DateOnly";
 import { ShoppingItem } from "./ShoppingItem";
 
@@ -53,8 +53,19 @@ function getProduct(id: number): Product {
   return {
     id: id,
     name: productNames[RandInt(0, productNames.length)],
+    brand: "Carrefour",
     category: getRandomItem(productCategories),
   } as Product;
+}
+
+function getSearchProduct(id: number): SearchProduct {
+  return {
+    id: id,
+    name: productNames[RandInt(0, productNames.length)],
+    brand: "Carrefour",
+    categoryId: RandInt(1, 100),
+    categoryBreadcrumbs: ["Artykuły spożywcze", "Sypkie i produkty zbożowe", "Ryż"],
+  } as SearchProduct;
 }
 
 function getShoppingItem(id: number): ShoppingItem {
@@ -69,7 +80,7 @@ function getShoppingList(id: number, itemsCount: number = 10): ShoppingList {
   return {
     id: id,
     name: getRandomItem(shoppingListNames),
-    dateCreated: getRandomItem(shoppingCreatedDates),
+    dateCreated: "12-23-2323",//getRandomItem(shoppingCreatedDates),
     shoppingItems: createArrayOf<ShoppingItem>(getShoppingItem, itemsCount),
     archived: RandInt(0, 2) != 1,
   } as ShoppingList;
@@ -79,10 +90,10 @@ function getShoppingListPreview(id: number): ShoppingListPreview {
   return {
     id: id,
     name: getRandomItem(shoppingListNames),
-    dateCreated: getRandomItem(shoppingCreatedDates),
-    shoppingItemsCount: RandInt(0, 20),
+    dateCreated: "12-23-2323",//getRandomItem(shoppingCreatedDates),
+    itemsCount: RandInt(0, 20),
     archived: RandInt(0, 2) != 1,
   } as ShoppingListPreview;
 }
 
-export { getProduct, getShoppingList, getShoppingListPreview };
+export { getProduct, getSearchProduct, getShoppingList, getShoppingListPreview };

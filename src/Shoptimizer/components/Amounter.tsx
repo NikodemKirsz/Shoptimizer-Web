@@ -10,7 +10,7 @@ interface AmounterProps {
 }
 
 function Amounter(props: AmounterProps) {
-  const { setValue, value } = props;
+  const { value, setValue } = props;
   const {style, color} = useStyles();
 
   const size: DimensionValue = 20;
@@ -24,7 +24,7 @@ function Amounter(props: AmounterProps) {
     <View style={style.amounterContainer}>
       <MyPressable
         style={style.amounterButton}
-        onPressIn={() => decrease()}
+        onPress={() => decrease(1)}
         onLongPress={() => decrease(5)}
       >
         <Icon name={"remove"} size={size} color={color.text}/>
@@ -34,7 +34,7 @@ function Amounter(props: AmounterProps) {
       </View>
       <MyPressable
         style={style.amounterButton}
-        onPressIn={() => increase()}
+        onPress={() => increase(1)}
         onLongPress={() => increase(5)}
       >
         <Icon name={"add"} size={size} color={color.text}/>

@@ -4,6 +4,13 @@ interface ShoppingItem {
   id: number;
   product: Product;
   count: number;
+  shoppingListId: number;
 }
 
-export type { ShoppingItem };
+interface ShoppingItemPostDto extends Omit<ShoppingItem,
+  "id" | "product"
+> {
+  productId: number;
+}
+
+export type { ShoppingItem, ShoppingItemPostDto };

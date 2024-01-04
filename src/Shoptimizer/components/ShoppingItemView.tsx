@@ -8,20 +8,27 @@ import { useDebounce } from "../hooks/useDebounce";
 import { combine } from "../logic/viewHelpers";
 
 interface ShoppingItemViewProps extends Attributes {
+  readonly: boolean;
   shoppingItem: ShoppingItem;
   updateCount: (count: number) => Promise<void>;
   deleteItem: () => Promise<void>;
 }
 
 function ShoppingItemView(props: ShoppingItemViewProps) {
-  const {shoppingItem, deleteItem} = props;
+  const {readonly: readonly, shoppingItem, updateCount, deleteItem} = props;
   const {style, color} = useStyles();
 
+  const [initialized, setInitialized] = useState(false);
   const [count, setCount] = useState<number>(shoppingItem.count);
-  const debouncedCount = useDebounce(count, 1000);
+  const [debouncedCount, _] = useDebounce<number>(count, 1000);
 
   useEffect(() => {
-    
+    if (initialized) {
+      updateCount(debouncedCount)
+        .catch(console.warn);
+    } else {
+      setInitialized(true);
+    }
   }, [debouncedCount]);
   
   const onChangeCount = useCallback((value: number) => {
@@ -37,18 +44,20 @@ function ShoppingItemView(props: ShoppingItemViewProps) {
       <View style={combine(style.cardTextContainer, { maxWidth: "60%" })}>
         <Text style={combine(style.text, { fontSize: 20 })}>{shoppingItem.product.name}</Text>
       </View>
-      <View style={combine(style.cardButtonsContainer, { width: 116 })}>
-        <Amounter
-          value={count}
-          setValue={onChangeCount}
-        />
-        <MyButton
-          backgroundColor={"red"}
-          iconType={"close"}
-          size={30}
-          onPress={deleteShoppingItem}
-        />
-      </View>
+      {!readonly && (
+        <View style={combine(style.cardButtonsContainer, { width: 116 })}>
+          <Amounter
+            value={count}
+            setValue={onChangeCount}
+          />
+          <MyButton
+            backgroundColor={"red"}
+            iconType={"close"}
+            size={30}
+            onPress={deleteShoppingItem}
+          />
+        </View>
+      )}
     </View>
   );
 }

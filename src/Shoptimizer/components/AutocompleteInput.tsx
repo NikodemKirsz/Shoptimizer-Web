@@ -1,97 +1,92 @@
 ﻿import {
   ActivityIndicator,
   DimensionValue,
-  NativeSyntheticEvent, ScrollView,
+  NativeSyntheticEvent,
+  ScrollView,
   TextInput,
   Text,
   TextInputChangeEventData,
-  View, Animated,
+  View,
 } from "react-native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useStyles } from "../hooks";
-import { Product } from "../models/Product";
-import { getProduct } from "../models/FakeData";
 import MyButton from "./MyButton";
 import { useDebounce } from "../hooks/useDebounce";
 import MyPressable from "./MyPressable";
-import delay = Animated.delay;
 import { combine } from "../logic/viewHelpers";
 
-type ProductSearchAutocompleteInputProps = {
-  width?: DimensionValue;
-  height?: DimensionValue;
+interface ItemBase {
+  id: number | string;
+}
+
+type AutocompleteInputProps<TItem extends ItemBase> = {
+  fetchItems: (phrase: string, signal?: AbortSignal) => Promise<TItem[]>;
+  renderItem: (item: TItem) => ReactNode;
+  submitItem: (item: TItem, signal?: AbortSignal) => Promise<void>;
+  placeholder: string;
   debounceTime?: number;
-  submitProduct: (product: Product) => void;
 };
 
-function ProductSearchAutocompleteInput(props: ProductSearchAutocompleteInputProps) {
-  let {width, height, debounceTime, submitProduct} = props;
+function AutocompleteInput<TItem extends ItemBase>(props: AutocompleteInputProps<TItem>) {
+  let {fetchItems, renderItem, submitItem, placeholder, debounceTime} = props;
   const {style, color} = useStyles();
   
   const clearButtonPadding = 40;
   debounceTime ??= 500;
-  width ??= "100%";
-  height ??= "70%";
 
   const [inputValue, setInputValue] = useState<string>("");
   const [debouncedInput, setDebouncedValue] = useDebounce<string>(inputValue, debounceTime);
   const [loading, setLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [items, setItems] = useState<TItem[]>([]);
   
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     if (debouncedInput.length < 3) {
-      setProducts([]);
+      setItems([]);
       return;
     }
     
-    const fetchData = async () => {
-      setLoading(true);
-
-      await delay(500);
-
-      setProducts([1, 2].map(getProduct));
-      setLoading(false);
-    }
+    const abortController = new AbortController();
     
-    fetchData()
+    (async (): Promise<void> => {
+      setLoading(true);
+      
+      const fetchedItems: TItem[] = await fetchItems(debouncedInput, abortController.signal);
+      setItems(fetchedItems);
+      
+      setLoading(false);
+    })()
       .catch(console.error);
+    
+    return () => abortController.abort();
   }, [debouncedInput]);
 
   const onInputChange = useCallback((e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
     setInputValue(value);
-  }, []);
+  }, [setInputValue]);
 
   const clearInput = useCallback(() => {
     setInputValue("");
     setDebouncedValue("");
-    setProducts([]);
-  }, []);
+    setItems([]);
+  }, [setInputValue, setDebouncedValue, setItems]);
   
-  const onSelectProduct = useCallback((selectedProduct: Product) => {
+  const onSelectItem = useCallback(async (selectedItem: TItem) => {
     clearInput();
-    submitProduct(selectedProduct);
-  }, []);
-
-  const onClearPress = useCallback(() => {
-    setProducts([]);
-  }, []);
-
-  const onOpenSuggestionsList = useCallback((isOpened: boolean) => {
-    console.log("isOpened", isOpened);
-  }, []);
+    await submitItem(selectedItem);
+  }, [clearInput, submitItem]);
   
   return (
-    <View style={style.container}>
+    <View style={style.maxWidth}>
       <View style={style.rowItemsContainer}>
         <TextInput
           ref={inputRef}
-          style={combine(style.input, style.text, { width: width, paddingRight: clearButtonPadding })}
+          style={combine(style.input, style.text, { width: "100%", paddingRight: clearButtonPadding })}
           value={inputValue}
           onChange={onInputChange}
-          placeholder={"Wpisz nazwę produktu"}
+          placeholder={placeholder}
           placeholderTextColor={color.placeholder}
         />
         <View style={{ position: "absolute", right: clearButtonPadding / 4 }}>
@@ -107,27 +102,17 @@ function ProductSearchAutocompleteInput(props: ProductSearchAutocompleteInputPro
         </View>
       </View>
       {debouncedInput.length >= 3 && !loading && (
-        <ScrollView
-          style={combine({
-            flexGrow: 0,
-            height: "auto",
-            maxHeight: height,
-            width: width,
-            backgroundColor: color.listItem,
-            borderRadius: 16,
-          })}
-        >
-          {products?.length > 0 ? products.map(p =>
+        <ScrollView style={style.autocompleteDropdown}>
+          {items?.length > 0 ? items.map((item: TItem) =>
             <MyPressable
-              key={p.id}
-              style={{ padding: 8, borderBottomWidth: 2, borderBottomColor: color.background }}
-              onPress={() => onSelectProduct(p)}
+              key={`AutocompleteItem-${item.id}`}
+              style={style.autocompleteListItem}
+              onPress={() => onSelectItem(item)}
             >
-              <Text style={style.text}>{p.name}</Text>
-              <Text style={style.subText}>{p.category}</Text>
+              {renderItem(item)}
             </MyPressable>
           ) : (
-            <View style={combine(style.container, { padding: 8 })}>
+            <View style={style.containerPadded8}>
               <Text style={style.text}>Brak wyników</Text>
             </View>
           )}
@@ -137,4 +122,4 @@ function ProductSearchAutocompleteInput(props: ProductSearchAutocompleteInputPro
   );
 }
 
-export default ProductSearchAutocompleteInput;
+export default AutocompleteInput;

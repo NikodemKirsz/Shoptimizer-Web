@@ -4,15 +4,22 @@ import { ShoppingItem } from "./ShoppingItem";
 interface ShoppingList {
   id: number;
   name: string;
-  dateCreated: DateOnly;
+  dateCreated: string;
   archived: boolean;
+  userId: number;
   shoppingItems: ShoppingItem[];
 }
 
 interface ShoppingListPreview extends Omit<ShoppingList,
   "shoppingItems"
 > {
-  shoppingItemsCount: number;
+  itemsCount: number;
 }
 
-export type { ShoppingList, ShoppingListPreview };
+interface ShoppingListPostDto extends Omit<ShoppingList,
+  "id" | "shoppingItems" | "dateCreated"
+> {
+  dateCreated?: Date;
+}
+
+export type { ShoppingList, ShoppingListPreview, ShoppingListPostDto };

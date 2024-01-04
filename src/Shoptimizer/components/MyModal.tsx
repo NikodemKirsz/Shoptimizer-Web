@@ -4,7 +4,7 @@
   StyleProp,
   TouchableWithoutFeedback,
   View,
-  ViewStyle
+  ViewStyle,
 } from "react-native";
 import { useStyles } from "../hooks";
 import { ReactNode } from "react";
@@ -22,9 +22,6 @@ function MyModal(props: MyModalProps) {
   const {center, children, visible, close, mainContainerStyle} = props;
   const {style, color} = useStyles();
   
-  const modalViewContainerStyle = combine(style.modalBackground, !!center && { justifyContent: 'center' });
-  const computedMainContainerStyle = combine(style.modalView, mainContainerStyle);
-  
   return (
     <Modal
       animationType="fade"
@@ -34,11 +31,11 @@ function MyModal(props: MyModalProps) {
       onDismiss={close}
     >
       <Pressable
-        style={modalViewContainerStyle}
+        style={combine(style.modalBackground, !!center && { justifyContent: 'center' })}
         onPressOut={close}
       >
         <TouchableWithoutFeedback>
-          <View style={computedMainContainerStyle}>
+          <View style={combine(style.modalView, mainContainerStyle )}>
             {children}
           </View>
         </TouchableWithoutFeedback>

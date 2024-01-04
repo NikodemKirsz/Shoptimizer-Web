@@ -1,6 +1,7 @@
-﻿import { View, Text } from "react-native";
+﻿import { useMemo } from "react";
+import { View, Text } from "react-native";
+import Tooltip from '@mui/material/Tooltip';
 import { useStyles } from "../../hooks";
-import { useMemo } from "react";
 import {
   RectDimensions,
   RectDimensionsExtended,
@@ -9,6 +10,7 @@ import {
 } from "../../models/utility/RectDimensions";
 import { calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
 import { combine } from "../../logic/viewHelpers";
+import MyButton from "../MyButton";
 
 interface ShelfProps {
   name?: string | undefined;
@@ -24,23 +26,20 @@ function Shelf(props: ShelfProps) {
   const [dimensionsPercent, positionPercent] = useMemo((): [RectDimensionsExtended, RectPositionExtended] => {
     const [relativeDimensions, relativePosition] = calculateRelativeValues(dimensions, position, floorDimensions);
     
-    return [
-      {
+    return [{
         width: toProc(relativeDimensions.width),
         height: toProc(relativeDimensions.height),
-      },
-      {
+      }, {
         top: toProc(relativePosition.top),
         left: toProc(relativePosition.left),
-      }
-    ]
+      }];
   },[
     dimensions.width,
-      dimensions.height,
-      position.top,
-      position.left,
-      floorDimensions.width,
-      floorDimensions.height,
+    dimensions.height,
+    position.top,
+    position.left,
+    floorDimensions.width,
+    floorDimensions.height,
   ]);
   
   return (
@@ -48,6 +47,8 @@ function Shelf(props: ShelfProps) {
       style={{
         position: "absolute",
         overflow: "hidden",
+        justifyContent: "center",
+        alignItems: "center",
         backgroundColor: color.listItem,
         borderWidth: 2,
         borderStyle: "solid",

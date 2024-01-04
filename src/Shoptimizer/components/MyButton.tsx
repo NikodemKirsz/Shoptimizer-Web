@@ -3,12 +3,15 @@
   GestureResponderEvent,
   Text,
   AnimatableNumericValue,
-  View, StyleProp, ViewStyle,
+  View,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
 import { useStyles } from "../hooks";
 import { Icon, KnownIcons } from "./Icon";
 import MyPressable from "./MyPressable";
 import { combine } from "../logic/viewHelpers";
+import { ReactElement } from "react";
 
 type IconType = "none" | "text" | KnownIcons;
 
@@ -52,10 +55,10 @@ const MyButton = (props: MyButtonProps) => {
   if (disabled)
     backgroundColor = 'grey';
   
-  const renderInsides = (type: IconType) => {
+  const renderInsides = (type: IconType): ReactElement => {
     switch (type) {
-      case "none": return;
-      case "text": return text && <Text>{text}</Text>;
+      case "none": return <></>;
+      case "text": return text ? <Text>{text}</Text> : <></>;
       default: return <Icon name={type} size={minSize * 0.7} color={tintColor!} />;
     }
   };

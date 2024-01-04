@@ -8,12 +8,18 @@ const getStyles = (colors: GlobalColors) => ({
       flex: 1,
       alignItems: 'center',
     },
+    containerPadded8: {
+      flex: 1,
+      alignItems: 'center',
+      padding: 8,
+    },
     fullContainer: {
       alignItems: 'center',
       width: "100%",
       height: "100%",
     },
     input: {
+      height: "100%",
       padding: 8,
       borderColor: colors.background,
       borderWidth: 2,
@@ -38,6 +44,9 @@ const getStyles = (colors: GlobalColors) => ({
     shoppingList: {
       flex: 1,
       flexDirection: 'column',
+    },
+    maxWidth: {
+      width: "100%",
     },
     itemList: {
       flex: 1,
@@ -77,7 +86,7 @@ const getStyles = (colors: GlobalColors) => ({
     cardButtonsContainer: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "flex-end",
       gap: 8,
     },
     rowButtonContainer: {
@@ -110,18 +119,38 @@ const getStyles = (colors: GlobalColors) => ({
       paddingHorizontal: 4,
     },
     modalBackground: {
-      flex: 1,
+      height: "100%",
       backgroundColor: '#141a1fA0',
     },
     modalView: {
+      position: "absolute",
       alignItems: 'center',
-      margin: 16,
+      width: "90%",
+      height: "auto",
+      marginHorizontal: "5%",
+      overflow: "hidden",
       paddingVertical: 24,
       paddingHorizontal: 16,
       borderRadius: 20,
       backgroundColor: colors.listItem,
       elevation: 5,
     },
+    autocompleteDropdown: {
+      maxHeight: "92%",
+      width: "100%",
+      marginTop: 16,
+      backgroundColor: colors.listItem,
+      borderRadius: 16,
+    },
+    autocompleteListItem: {
+      padding: 8,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: colors.background
+    },
+    scrollExtendedView: {
+      paddingBottom: "100%",
+    }
   })
 });
 

@@ -1,7 +1,15 @@
 ﻿interface Product {
   id: number;
   name: string;
+  brand: string;
   category: string;
 }
 
-export type { Product };
+interface SearchProduct extends Omit<Product,
+  "category"
+> {
+  categoryId: number;
+  categoryBreadcrumbs: string[];
+}
+
+export type { Product, SearchProduct };
