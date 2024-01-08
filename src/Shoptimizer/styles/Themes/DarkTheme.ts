@@ -15,6 +15,7 @@ const DarkTheme = {
     descriptionText: '#9cabc2', 
     buttonBackground: '#565656',
     strongAccent: '#b07600',
+    lightAccent: '#c4b036',
     transparent: '#00000000',
   },
 };

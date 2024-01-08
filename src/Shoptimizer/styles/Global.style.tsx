@@ -1,5 +1,10 @@
-﻿import { StyleSheet } from "react-native";
+﻿import { StyleSheet, ViewStyle } from "react-native";
 import { GlobalColors } from "./Themes/Themes";
+
+const fullSize: ViewStyle = {
+  width: "100%",
+  height: "100%",
+}
 
 const getStyles = (colors: GlobalColors) => ({
   color: colors,
@@ -14,9 +19,8 @@ const getStyles = (colors: GlobalColors) => ({
       padding: 8,
     },
     fullContainer: {
+      ...fullSize,
       alignItems: 'center',
-      width: "100%",
-      height: "100%",
     },
     input: {
       height: "100%",
@@ -120,7 +124,6 @@ const getStyles = (colors: GlobalColors) => ({
     },
     modalBackground: {
       height: "100%",
-      backgroundColor: '#141a1fA0',
     },
     modalView: {
       position: "absolute",
@@ -150,7 +153,21 @@ const getStyles = (colors: GlobalColors) => ({
     },
     scrollExtendedView: {
       paddingBottom: "100%",
-    }
+    },
+    productHintView: {
+      width: "96%",
+      height: "30%",
+    },
+    productHintContainerView: {
+      padding: 8,
+      backgroundColor: colors.listItem,
+    },
+    hidden: {
+      display: "none",
+    },
+    fullSize: {
+      ...fullSize,
+    },
   })
 });
 

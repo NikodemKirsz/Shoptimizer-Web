@@ -1,26 +1,28 @@
 ﻿import {
   RectDimensions,
   RectDimensionsExtended,
-  RectPosition,
   RectPositionExtended
 } from "../../models/utility/RectDimensions";
 import { useStyles } from "../../hooks";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
 import { View } from "react-native";
+import { ShopRoad } from "../../models/ShopModels";
 
 interface RoadProps {
-  dimensions: RectDimensions;
-  position: RectPosition;
+  road: ShopRoad;
   floorDimensions: RectDimensions;
   visible?: boolean;
 }
 
 function Road(props: RoadProps) {
-  let {dimensions, position, floorDimensions, visible} = props;
+  let {road: {position, dimensions}, floorDimensions, visible} = props;
   const {style, color} = useStyles();
 
   visible ??= true;
+  
+  if (!visible)
+    return <></>;
 
   const [dimensionsPercent, positionPercent] = useMemo((): [RectDimensionsExtended, RectPositionExtended] => {
     const [relativeDimensions, relativePosition] = calculateRelativeValues(dimensions, position, floorDimensions);

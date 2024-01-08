@@ -16,11 +16,14 @@ interface MyModalProps {
   visible: boolean;
   close: () => void;
   mainContainerStyle?: StyleProp<ViewStyle>;
+  dim?: boolean;
 }
 
 function MyModal(props: MyModalProps) {
-  const {center, children, visible, close, mainContainerStyle} = props;
+  let {center, children, visible, close, mainContainerStyle, dim} = props;
   const {style, color} = useStyles();
+
+  dim ??= true;
   
   return (
     <Modal
@@ -31,7 +34,10 @@ function MyModal(props: MyModalProps) {
       onDismiss={close}
     >
       <Pressable
-        style={combine(style.modalBackground, !!center && { justifyContent: 'center' })}
+        style={combine(style.modalBackground,
+          dim && { backgroundColor: '#141a1fA0' },
+          center && { justifyContent: 'center' }
+        )}
         onPressOut={close}
       >
         <TouchableWithoutFeedback>

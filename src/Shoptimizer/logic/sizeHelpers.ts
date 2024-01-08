@@ -1,4 +1,4 @@
-﻿import { RectDimensions, RectPosition } from "../models/utility/RectDimensions";
+﻿import { Orientation, RectDimensions, RectPosition } from "../models/utility/RectDimensions";
 import { DimensionValue } from "react-native";
 
 export function calculateRelativeValues(
@@ -16,6 +16,12 @@ export function calculateRelativeValues(
       left: position.left / floorDimensions.width,
     }
   ];
+}
+
+export function calculateOrientation(dimensions: RectDimensions): Orientation {
+  return dimensions.width >= dimensions.height
+    ? Orientation.Horizontal
+    : Orientation.Vertical;
 }
 
 export function toProc(val: number): DimensionValue {

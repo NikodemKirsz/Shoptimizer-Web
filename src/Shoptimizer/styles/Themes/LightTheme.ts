@@ -15,6 +15,7 @@ const LightTheme = {
     descriptionText: '#818892',
     buttonBackground: '#f1f3f7',
     strongAccent: '#ffb115',
+    lightAccent: '#c4b036',
     transparent: '#00000000',
   },
 };

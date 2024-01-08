@@ -1,5 +1,5 @@
 ﻿import { useStyles } from "../../hooks";
-import { useMemo } from "react";
+import { Attributes, useMemo } from "react";
 import {
   RectDimensions,
   RectDimensionsExtended,
@@ -9,15 +9,15 @@ import {
 import { calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
 import { Text, View } from "react-native";
 import { combine } from "../../logic/viewHelpers";
+import { ShopCheckout, ShopShelf } from "../../models/ShopModels";
 
-interface CheckoutProps {
-  dimensions: RectDimensions;
-  position: RectPosition;
+interface CheckoutProps extends Attributes {
+  checkout: ShopCheckout;
   floorDimensions: RectDimensions;
 }
 
 function Checkout(props: CheckoutProps) {
-  const {dimensions, position, floorDimensions} = props;
+  const {checkout: {dimensions, position}, floorDimensions} = props;
   const {style, color} = useStyles();
 
   const [dimensionsPercent, positionPercent] = useMemo((): [RectDimensionsExtended, RectPositionExtended] => {

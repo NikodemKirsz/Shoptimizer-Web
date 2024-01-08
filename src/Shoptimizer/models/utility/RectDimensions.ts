@@ -1,4 +1,4 @@
-﻿import { DimensionValue } from "react-native";
+﻿import { DimensionValue, LayoutRectangle } from "react-native";
 
 export type RectDimensions = {
   width: number;
@@ -18,4 +18,19 @@ export type RectPosition = {
 export type RectPositionExtended = {
   top: number | DimensionValue;
   left: number | DimensionValue;
+}
+
+export type Rect = {
+  dimensions: RectDimensions;
+  position: RectPosition;
+}
+
+export interface ViewLayoutRectangle extends LayoutRectangle {
+  top: number;
+  left: number;
+}
+
+export enum Orientation {
+  Vertical = 0,
+  Horizontal = 1,
 }

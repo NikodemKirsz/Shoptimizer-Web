@@ -30,7 +30,7 @@ function Floor(props: FloorProps) {
     <View
       style={{
         position: "relative",
-        overflow: "hidden",
+        overflow: "visible",
         backgroundColor: color.background,
         borderWidth: 4,
         borderStyle: "solid",

@@ -13,6 +13,7 @@ interface GlobalColors {
   descriptionText: string,
   buttonBackground: string,
   strongAccent: string,
+  lightAccent: string,
   transparent: string,
 }
 

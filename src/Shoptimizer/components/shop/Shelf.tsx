@@ -1,27 +1,32 @@
-﻿import { useMemo } from "react";
-import { View, Text } from "react-native";
-import Tooltip from '@mui/material/Tooltip';
+﻿import { Attributes, Key, useMemo } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../hooks";
 import {
+  Orientation,
   RectDimensions,
   RectDimensionsExtended,
   RectPosition,
   RectPositionExtended
 } from "../../models/utility/RectDimensions";
-import { calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
+import { calculateOrientation, calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
 import { combine } from "../../logic/viewHelpers";
-import MyButton from "../MyButton";
+import { SectionHint, ShelfSection, ShopShelf } from "../../models/ShopModels";
+import Section from "./Section";
 
-interface ShelfProps {
-  name?: string | undefined;
-  dimensions: RectDimensions;
-  position: RectPosition;
+
+interface ShelfProps extends Attributes {
+  shelf: ShopShelf;
   floorDimensions: RectDimensions;
+  onHint: (sectionHint: SectionHint | null) => void;
 }
 
 function Shelf(props: ShelfProps) {
-  const {name, dimensions, position, floorDimensions} = props;
+  const {shelf: { id, dimensions, position, sections }, floorDimensions, onHint} = props;
   const {style, color} = useStyles();
+  
+  const isVertical: boolean = useMemo(() => {
+    return calculateOrientation(dimensions) == Orientation.Vertical;
+  }, [dimensions.width, dimensions.height]);
   
   const [dimensionsPercent, positionPercent] = useMemo((): [RectDimensionsExtended, RectPositionExtended] => {
     const [relativeDimensions, relativePosition] = calculateRelativeValues(dimensions, position, floorDimensions);
@@ -46,9 +51,9 @@ function Shelf(props: ShelfProps) {
     <View
       style={{
         position: "absolute",
-        overflow: "hidden",
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection: isVertical ? "column" : "row",
+        gap: 2,
+        overflow: "visible",
         backgroundColor: color.listItem,
         borderWidth: 2,
         borderStyle: "solid",
@@ -57,11 +62,16 @@ function Shelf(props: ShelfProps) {
         height: dimensionsPercent.height,
         left: positionPercent.left,
         top: positionPercent.top,
-    }}
+      }}
     >
-      {name && (
-        <Text style={combine(style.text, { fontSize: 12 })}>{name}</Text>
-      )}
+      <Text style={combine(style.text, { alignSelf: "center", fontSize: 18 })}>{id}</Text>
+      {sections.length > 0 && sections.map((section) => (
+        <Section
+          key={`ShelfSection-${section.id}`}
+          section={section}
+          onHint={onHint}
+        />
+      ))}
     </View>
   );
 }
