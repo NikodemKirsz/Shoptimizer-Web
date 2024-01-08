@@ -43,7 +43,6 @@ export abstract class Backend {
 
     return handleApiResponse<SearchProduct[]>(res);
   }
-
   
   public static async getShoppingListWithShoppingItems(id: number, signal?: AbortSignal): Promise<ApiResponse<ShoppingList>> {
     const res: AxiosResponse<ShoppingList> = await Backend.apiClient.get(
@@ -138,7 +137,7 @@ function handleApiResponse<T, D = T>(res: AxiosResponse<T, D>): ApiResponse<T> {
     statusCode: res.status,
     message: res.statusText,
     data: res.data,
-  } as ApiResponse<T>;
+  };
 }
 
 function compileUrl(url: string, params: object) {
