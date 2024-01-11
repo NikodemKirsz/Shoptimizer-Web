@@ -7,6 +7,7 @@ type SettingsProps = {
 };
 
 type MapProps = {
+  shoppingListPreview: ShoppingListPreview;
 };
 
 type ShoppingListCollectionScreenProps = {

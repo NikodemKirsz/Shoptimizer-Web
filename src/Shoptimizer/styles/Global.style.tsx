@@ -72,6 +72,10 @@ const getStyles = (colors: GlobalColors) => ({
       fontSize: 24,
       color: colors.text,
     },
+    text20: {
+      fontSize: 20,
+      color: colors.text,
+    },
     subText: {
       fontSize: 16,
       color: colors.subText,
@@ -135,7 +139,7 @@ const getStyles = (colors: GlobalColors) => ({
       paddingVertical: 24,
       paddingHorizontal: 16,
       borderRadius: 20,
-      backgroundColor: colors.listItem,
+      backgroundColor: colors.darkerListItem,
       elevation: 5,
     },
     autocompleteDropdown: {
@@ -156,7 +160,7 @@ const getStyles = (colors: GlobalColors) => ({
     },
     productHintView: {
       width: "96%",
-      height: "30%",
+      height: "20%",
     },
     productHintContainerView: {
       padding: 8,

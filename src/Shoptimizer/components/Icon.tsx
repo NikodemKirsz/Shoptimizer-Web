@@ -7,8 +7,25 @@ type KnownIcons =
   "close" |
   "remove" |
   "add" |
-  "search"
-;
+  "search" | 
+  "list" |
+  "map" |
+  "refresh";
+
+type IconDict = {
+  [K in KnownIcons]: string
+};
+
+const iconDict: IconDict = {
+  "done": "done",
+  "close": "close",
+  "remove": "remove",
+  "add": "add",
+  "search": "search",
+  "list": "receipt-long",
+  "map": "navigation",
+  "refresh": "refresh",
+};
 
 interface IconProps {
   name: KnownIcons;
@@ -19,7 +36,7 @@ interface IconProps {
 function Icon(props: IconProps) {
   return (
     <MaterialIcons
-      name={props.name}
+      name={iconDict[props.name]}
       size={props.size}
       color={props.color}
     />

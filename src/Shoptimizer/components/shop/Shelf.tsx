@@ -10,18 +10,18 @@ import {
 } from "../../models/utility/RectDimensions";
 import { calculateOrientation, calculateRelativeValues, toProc } from "../../logic/sizeHelpers";
 import { combine } from "../../logic/viewHelpers";
-import { SectionHint, ShelfSection, ShopShelf } from "../../models/ShopModels";
+import { ShelfSection, ShopShelf } from "../../models/ShopModels";
 import Section from "./Section";
 
 
 interface ShelfProps extends Attributes {
   shelf: ShopShelf;
   floorDimensions: RectDimensions;
-  onHint: (sectionHint: SectionHint | null) => void;
+  onHint: (sectionHint: ShelfSection) => void;
 }
 
 function Shelf(props: ShelfProps) {
-  const {shelf: { id, dimensions, position, sections }, floorDimensions, onHint} = props;
+  const {shelf: { number, dimensions, position, sections }, floorDimensions, onHint} = props;
   const {style, color} = useStyles();
   
   const isVertical: boolean = useMemo(() => {
@@ -64,10 +64,10 @@ function Shelf(props: ShelfProps) {
         top: positionPercent.top,
       }}
     >
-      <Text style={combine(style.text, { alignSelf: "center", fontSize: 18 })}>{id}</Text>
+      {false && <Text style={combine(style.text, { alignSelf: "center", fontSize: 18 })}>{number}</Text>}
       {sections.length > 0 && sections.map((section) => (
         <Section
-          key={`ShelfSection-${section.id}`}
+          key={`ShelfSection-${section.number}`}
           section={section}
           onHint={onHint}
         />

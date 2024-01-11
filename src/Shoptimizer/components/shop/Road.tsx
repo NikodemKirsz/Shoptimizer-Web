@@ -19,7 +19,7 @@ function Road(props: RoadProps) {
   let {road: {position, dimensions}, floorDimensions, visible} = props;
   const {style, color} = useStyles();
 
-  visible ??= true;
+  visible ??= false;
   
   if (!visible)
     return <></>;

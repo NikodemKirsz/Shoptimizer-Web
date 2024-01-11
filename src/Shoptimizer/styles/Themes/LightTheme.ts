@@ -7,6 +7,7 @@ const LightTheme = {
     background: '#d5d5d5',
     card: '#ffffff',
     listItem: '#ffffff',
+    darkerListItem: '#cbcbcb',
     text: '#022152',
     subText: '#0049ad',
     border: '#D8D8D8',

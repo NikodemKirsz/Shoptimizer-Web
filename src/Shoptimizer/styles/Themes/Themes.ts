@@ -5,6 +5,7 @@ interface GlobalColors {
   background: string,
   card: string,
   listItem: string,
+  darkerListItem: string,
   text: string,
   subText: string,
   border: string,

@@ -1,6 +1,6 @@
-﻿import { SectionHint, ShoppingShop } from "../../models/ShopModels";
+﻿import { ShelfSection, ShoppingShop } from "../../models/ShopModels";
 import { useStyles } from "../../hooks";
-import { LayoutChangeEvent, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { LayoutChangeEvent, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { combine } from "../../logic/viewHelpers";
 import { ReactNativeZoomableView as ZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import Floor from "./Floor";
@@ -9,18 +9,17 @@ import Checkout from "./Checkout";
 import Road from "./Road";
 import React, { useCallback, useEffect, useState } from "react";
 import { RectDimensions } from "../../models/utility/RectDimensions";
-import MyButton from "../MyButton";
 
 type ShopProps = {
   shop: ShoppingShop;
 }
 
 function Shop(props: ShopProps) {
-  const {shop, shop: {floor}} = props;
+  const {shop: {id, floor}} = props;
   const {color, style} = useStyles();
 
   const [containerDimensions, setContainerDimensions] = useState<RectDimensions>();
-  const [sectionHint, setSectionHint] = useState<SectionHint | null>();
+  const [selectedSection, setSelectedSection] = useState<ShelfSection | null>(null);
 
   const onLayoutChange = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
@@ -31,8 +30,8 @@ function Shop(props: ShopProps) {
   }, [setContainerDimensions]);
   
   const hideSectionHint = useCallback(() => {
-    setSectionHint(null)
-  }, [setSectionHint]);
+    setSelectedSection(null)
+  }, [id, setSelectedSection]);
   
   return (
     <View
@@ -40,69 +39,63 @@ function Shop(props: ShopProps) {
     >
       <ScrollView
         style={style.productHintView}
-        contentContainerStyle={!!sectionHint ? style.productHintContainerView : style.hidden}
+        contentContainerStyle={!!selectedSection ? style.productHintContainerView : style.hidden}
       >
-        {sectionHint && (
+        {selectedSection && (
           <TouchableOpacity
             onPress={hideSectionHint}
           >
             <View style={style.container}>
-              <Text style={combine(style.text, { fontSize: 32 })}>{sectionHint.category}</Text>
+              <Text style={combine(style.text, { fontSize: 32 })}>{selectedSection.categoryName}</Text>
             </View>
-            {sectionHint.items.map((item, i) => (
-              <Text key={i} style={combine(style.text, { fontSize: 20 })}>{item}</Text>
+            {selectedSection.shoppingProducts.map((item, i) => (
+              <Text key={i} style={combine(style.text, { fontSize: 20 })}>{item.name}</Text>
             ))}
           </TouchableOpacity>
         )}
       </ScrollView>
       <View
-        style={combine(style.fullContainer, { height: "60%" })}
+        style={combine(style.fullContainer, { height: "80%" })}
         onLayout={onLayoutChange}
       >
         <ZoomableView
           minZoom={0.5}
-          maxZoom={4}
+          maxZoom={3}
           initialZoom={1}
         >
           {containerDimensions && (
             <Floor
-              floorDimensions={floor.floorDimensions}
+              floorDimensions={floor.dimensions}
               containerDimensions={containerDimensions}
             >
               {floor.shelves.map(shelf => (
                 <Shelf
-                  key={`ShopShelf-${shelf.id}`}
+                  key={`ShopShelf-${shelf.number}`}
                   shelf={shelf}
-                  floorDimensions={floor.floorDimensions}
-                  onHint={setSectionHint}
+                  floorDimensions={floor.dimensions}
+                  onHint={setSelectedSection}
                 />
               ))}
 
               {floor.checkouts && floor.checkouts.map(checkout => (
                 <Checkout
-                  key={`ShopCheckout-${checkout.id}`}
+                  key={`ShopCheckout-${checkout.number}`}
                   checkout={checkout}
-                  floorDimensions={floor.floorDimensions}
+                  floorDimensions={floor.dimensions}
                 />
               ))}
 
               {floor.roads && floor.roads.map(road => (
                 <Road
-                  key={`ShopRoad-${road.id}`}
+                  key={`ShopRoad-${road.number}`}
                   road={road}
-                  floorDimensions={floor.floorDimensions}
+                  floorDimensions={floor.dimensions}
                   visible={false}
                 />
               ))}
            </Floor>
           )}
         </ZoomableView>
-      </View>
-      <View
-        style={combine(style.fullContainer, style.rowButtonContainer, { height: "10%" })}
-      >
-        <MyButton backgroundColor={"green"} iconType={"done"}/>
-        <MyButton backgroundColor={"red"} iconType={"close"}/>
       </View>
     </View>
   );

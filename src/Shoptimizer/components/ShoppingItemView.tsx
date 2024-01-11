@@ -15,7 +15,7 @@ interface ShoppingItemViewProps extends Attributes {
 }
 
 function ShoppingItemView(props: ShoppingItemViewProps) {
-  const {readonly: readonly, shoppingItem, updateCount, deleteItem} = props;
+  const {readonly, shoppingItem, updateCount, deleteItem} = props;
   const {style, color} = useStyles();
 
   const [initialized, setInitialized] = useState(false);

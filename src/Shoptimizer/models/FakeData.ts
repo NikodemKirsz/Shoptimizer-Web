@@ -93,6 +93,7 @@ function getShoppingList(id: number, itemsCount: number = 10): ShoppingList {
     id: id,
     userId: 1,
     name: getRandomItem(shoppingListNames),
+    shopId: "659b3425d4640bbf55de1434",
     dateCreated: "12-23-2323",//getRandomItem(shoppingCreatedDates),
     shoppingItems: createArrayOf<ShoppingItem>(getShoppingItem, itemsCount),
     archived: RandInt(0, 2) != 1,
@@ -104,6 +105,7 @@ function getShoppingListPreview(id: number): ShoppingListPreview {
     id: id,
     userId: 1,
     name: getRandomItem(shoppingListNames),
+    shopId: "659b3425d4640bbf55de1434",
     dateCreated: "12-23-2323",//getRandomItem(shoppingCreatedDates),
     itemsCount: RandInt(0, 20),
     archived: RandInt(0, 2) != 1,
@@ -115,10 +117,10 @@ function createSectionArray() {
     (i) => {
       return {
         id: i.toString(),
-        name: getRandomItem(productCategories),
+        categoryName: getRandomItem(productCategories),
         size: RandInt(1, 4),
         skip: RandInt(0, 2),
-        items: createArrayOf<string>(
+        shoppingProducts: createArrayOf<string>(
           () => getRandomItem(productNames),
           RandInt(0, 10),
         )
@@ -134,7 +136,7 @@ function getShoppingShop(): ShoppingShop {
     name: "Carrefour",
     address: "Popławska 4/20, 95-200 Pabianice",
     floor: {
-      floorDimensions: {
+      dimensions: {
         width: 640,
         height: 320,
       },

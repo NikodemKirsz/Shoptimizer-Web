@@ -22,8 +22,8 @@ export default function App() {
   return (
     <NavigationContainer theme={isDarkTheme ? DarkTheme : LightTheme}>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Shopping List" component={ShoppingListScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false, title: "Strona główna" }} />
+        <Stack.Screen name="Shopping List" component={ShoppingListScreen} options={{ title: "Lista zakupowa" }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

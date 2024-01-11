@@ -3,13 +3,14 @@ import axios, { AxiosResponse } from 'axios';
 import { SearchProduct } from "../models/Product";
 import { ShoppingList, ShoppingListPostDto, ShoppingListPreview } from "../models/ShoppingList";
 import { ShoppingItem, ShoppingItemPostDto } from "../models/ShoppingItem";
+import { ShoppingShop, ShopPreview } from "../models/ShopModels";
 
 export abstract class Backend {
   static readonly localHost = "https://localhost:44357/";
   static readonly remoteHost = "https://shoptimizer-api.azurewebsites.net/";
   
   static readonly apiClient = axios.create({
-    baseURL: Backend.remoteHost,
+    baseURL: Backend.localHost,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -17,7 +18,7 @@ export abstract class Backend {
   });
 
   // Search
-  private static readonly searchProductsUrl = "Search/SearchProducts";
+  private static readonly searchProductsUrl = "Search/ForShoppingList/{shoppingListId}";
 
   // ShoppingList
   private static readonly getShoppingListWithShoppingItemsUrl = "ShoppingList/{id}/GetWithShoppingItems"
@@ -32,10 +33,16 @@ export abstract class Backend {
   private static readonly createShoppingItemUrl = "ShoppingItem/Create";
   private static readonly updateShoppingItemCountUrl = "ShoppingItem/{id}/UpdateCount/{count}";
   private static readonly deleteShoppingItemUrl = "ShoppingItem/{id}/Delete";
+  
+  // Shop
+  private static readonly getShopPreviewsUrl = "Shop/GetPreviews";
+  
+  // Shopping
+  private static readonly getShoppingShopForShoppingListUrl = "Shopping/GetForShoppingList/{id}";
 
-  public static async searchProducts(phrase: string, signal?: AbortSignal): Promise<ApiResponse<SearchProduct[]>> {
+  public static async searchProducts(shoppingListId: number, phrase: string, signal?: AbortSignal): Promise<ApiResponse<SearchProduct[]>> {
     const res: AxiosResponse<SearchProduct[]> = await Backend.apiClient.get<SearchProduct[]>(
-      Backend.searchProductsUrl, {
+      compileUrl(Backend.searchProductsUrl, { shoppingListId }), {
         params: { phrase },
         signal: signal,
       }
@@ -54,6 +61,7 @@ export abstract class Backend {
     return handleApiResponse(res);
   }
   public static async createShoppingList(shoppingList: ShoppingListPostDto, signal?: AbortSignal): Promise<ApiResponse<ShoppingList>> {
+    console.log("SHOPPING LIST", shoppingList)
     const res: AxiosResponse<ShoppingList, ShoppingListPostDto> = await Backend.apiClient.post<
       ShoppingList,
       AxiosResponse<ShoppingList, ShoppingListPostDto>,
@@ -119,9 +127,30 @@ export abstract class Backend {
     return handleApiResponse(res);
   }
 
-  public static async getShoppingListPreviewsForUser(userId: number, signal?: AbortSignal): Promise<ApiResponse<ShoppingListPreview[]>> {
+  public static async getShoppingListPreviewsForUser(userId: number, includeArchived: boolean, signal?: AbortSignal): Promise<ApiResponse<ShoppingListPreview[]>> {
     const res: AxiosResponse<ShoppingListPreview[], any> = await Backend.apiClient.get<ShoppingListPreview[]>(
       compileUrl(Backend.getShoppingListPreviewsForUserUrl, { userId }), {
+        params: { includeArchived },
+        signal: signal,
+      }
+    );
+
+    return handleApiResponse(res);
+  }
+
+  public static async getShopPreviews(signal?: AbortSignal): Promise<ApiResponse<ShopPreview[]>> {
+    const res: AxiosResponse<ShopPreview[], any> = await Backend.apiClient.get<ShopPreview[]>(
+      Backend.getShopPreviewsUrl, {
+        signal: signal,
+      }
+    );
+
+    return handleApiResponse(res);
+  }
+
+  public static async getShoppingShopForShoppingList(id: number, signal?: AbortSignal): Promise<ApiResponse<ShoppingShop>> {
+    const res: AxiosResponse<ShoppingShop, any> = await Backend.apiClient.get<ShoppingShop>(
+      compileUrl(Backend.getShoppingShopForShoppingListUrl, { id }), {
         signal: signal,
       }
     );

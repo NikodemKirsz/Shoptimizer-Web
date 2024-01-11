@@ -1,9 +1,9 @@
 ﻿import { RectDimensions, RectPosition } from "./utility/RectDimensions";
 
-export interface SectionHint {
-  category: string;
-  items: string[];
-} 
+export interface ShopPreview extends Omit<ShoppingShop,
+  "floor"
+> {
+}
 
 export interface ShoppingShop {
   id: string;
@@ -13,31 +13,36 @@ export interface ShoppingShop {
 }
 
 export interface ShopFloor {
-  floorDimensions: RectDimensions;
+  dimensions: RectDimensions;
   shelves: ShopShelf[];
-  roads?: ShopRoad[];
+  roads: ShopRoad[];
   checkouts: ShopCheckout[];
 }
 
 export interface ShopShelf extends Positioned {
-  id: string;
+  number: number;
   sections: ShelfSection[];
 }
 
 export interface ShopCheckout extends Positioned {
-  id: string;
+  number: number;
 }
 
 export interface ShopRoad extends Positioned {
-  id: string;
+  number: number;
 }
 
 export interface ShelfSection {
-  id: string;
-  name: string;
+  number: number;
   skip: number;
   size: number;
-  items: string[];
+  categoryName: string;
+  shoppingProducts: ShoppingProduct[];
+}
+
+export interface ShoppingProduct {
+  id: number;
+  name: string;
 }
 
 export interface Positioned {

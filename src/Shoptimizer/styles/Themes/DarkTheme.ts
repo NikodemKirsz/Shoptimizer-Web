@@ -7,6 +7,7 @@ const DarkTheme = {
     background: '#141a1f',
     card: '#38577e',
     listItem: '#212e41',
+    darkerListItem: '#1a2533',
     text: '#fbfefe',
     subText: '#c0bfbf',
     border: '#272729',

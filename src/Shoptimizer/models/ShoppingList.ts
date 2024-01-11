@@ -7,6 +7,7 @@ interface ShoppingList {
   dateCreated: string;
   archived: boolean;
   userId: number;
+  shopId: string;
   shoppingItems: ShoppingItem[];
 }
 

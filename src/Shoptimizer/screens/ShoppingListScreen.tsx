@@ -27,6 +27,8 @@ function ShoppingListScreen(props: Props) {
   const {navigation, route, params: {shoppingListPreview}} = deconstructProps(props);
   const {style, color} = useStyles();
   
+  const shoppingListId = shoppingListPreview.id;
+  
   const [screenHeight, _] = useState(Dimensions.get('screen').height);
   const [shoppingList, setShoppingList] = useState<ShoppingList>();
   const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
@@ -36,7 +38,7 @@ function ShoppingListScreen(props: Props) {
     const abortController = new AbortController();
     
     (async () => {
-      const response = await Backend.getShoppingListWithShoppingItems(shoppingListPreview.id, abortController.signal);
+      const response = await Backend.getShoppingListWithShoppingItems(shoppingListId, abortController.signal);
       const list = response.data;
       setShoppingList(list);
       setShoppingItems(list.shoppingItems);
@@ -44,21 +46,37 @@ function ShoppingListScreen(props: Props) {
       .catch(console.warn);
     
     return () => abortController.abort();
-  }, [shoppingListPreview.id]);
+  }, [shoppingListId]);
 
   useEffect(() => {
     navigation.setOptions({
       title: shoppingListPreview?.name,
       headerRight: () => (
-        !shoppingListPreview.archived && (
-          <MyButton
-            containerStyle={{marginRight: 8}}
-            size={36}
-            backgroundColor="#00000000"
-            onPress={() => showModal(true)}
-            iconType={"add"}
-          />
-        )
+        <View style={style.cardButtonsContainer}>
+          {!shoppingListPreview.archived && (
+            <>
+              <MyButton
+                containerStyle={{ marginRight: 8 }}
+                size={36}
+                backgroundColor="#00000000"
+                onPress={() => navigation.navigate({
+                  name: "Map",
+                  params: {
+                    shoppingListPreview: shoppingListPreview,
+                  },
+                })}
+                iconType={"map"}
+              />
+              <MyButton
+                containerStyle={{marginRight: 8}}
+                size={36}
+                backgroundColor="#00000000"
+                onPress={() => showModal(true)}
+                iconType={"add"}
+              />
+            </>
+          )}
+        </View>
       ),
     });
   }, [navigation, shoppingListPreview]);
@@ -80,7 +98,7 @@ function ShoppingListScreen(props: Props) {
   }, [setModalVisible]);
   
   const fetchSearchProducts = useCallback(async (phrase: string, signal?: AbortSignal): Promise<SearchProduct[]> => {
-    const response = await Backend.searchProducts(phrase, signal);
+    const response = await Backend.searchProducts(shoppingListId, phrase, signal);
     return response.data;
   }, []);
   
@@ -88,7 +106,7 @@ function ShoppingListScreen(props: Props) {
     const newShoppingItemPost: ShoppingItemPostDto = {
       productId: searchProduct.id,
       count: 1,
-      shoppingListId: shoppingListPreview.id
+      shoppingListId: shoppingListId
     };
     
     const response = await Backend.createShoppingItem(newShoppingItemPost, signal);
