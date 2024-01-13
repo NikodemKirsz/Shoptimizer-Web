@@ -2,19 +2,18 @@
 import {
   ActivityIndicator, Dimensions,
   ScrollView,
-  Text, useWindowDimensions,
+  Text,
   View
 } from "react-native";
 import ShoppingItemView from "../components/ShoppingItemView";
 import { useCallback, useEffect, useState } from "react";
 import { ShoppingList } from "../models/ShoppingList";
-import MyButton from "../components/MyButton";
 import MyModal from "../components/MyModal";
 import { ShoppingItem, ShoppingItemPostDto } from "../models/ShoppingItem";
 import AutocompleteInput from "../components/AutocompleteInput";
 import { RootStackParamList } from "../models/NavigationData";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { combine, deconstructProps } from "../logic/viewHelpers";
+import { deconstructProps } from "../logic/viewHelpers";
 import { SearchProduct } from "../models/Product";
 import { Backend } from "../logic/backend";
 import DateOnly from "../models/DateOnly";
