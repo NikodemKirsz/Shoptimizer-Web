@@ -35,7 +35,7 @@ function Shop(props: ShopProps) {
   
   return (
     <View
-      style={combine(style.fullContainer, { padding: 16 })}
+      style={style.fullContainerPad16}
     >
       <ScrollView
         style={style.productHintView}
@@ -45,17 +45,17 @@ function Shop(props: ShopProps) {
           <TouchableOpacity
             onPress={hideSectionHint}
           >
-            <View style={style.container}>
-              <Text style={combine(style.text, { fontSize: 32 })}>{selectedSection.categoryName}</Text>
+            <View style={style.titleContainer}>
+              <Text style={style.categoryTitleText}>{selectedSection.categoryName}</Text>
             </View>
             {selectedSection.shoppingProducts.map((item, i) => (
-              <Text key={i} style={combine(style.text, { fontSize: 20 })}>{item.name}</Text>
+              <Text key={i} style={style.text18}>{item.name}</Text>
             ))}
           </TouchableOpacity>
         )}
       </ScrollView>
       <View
-        style={combine(style.fullContainer, { height: "80%" })}
+        style={style.shopContainerView}
         onLayout={onLayoutChange}
       >
         <ZoomableView

@@ -32,6 +32,7 @@ function ShoppingListCollectionView(props: Props) {
 
     (async () => {
       setRefreshing(true);
+      setShoppingListPreviews([]);
       const shoppingListsResponse = await Backend.getShoppingListPreviewsForUser(
         1,
         includeArchived!,
@@ -77,9 +78,7 @@ function ShoppingListCollectionView(props: Props) {
   return (
     <ScrollView
       style={style.scrollExtendedView}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
-      }
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["green"]}/>}
     >
       {shoppingListPreviews ? (
         shoppingListPreviews.map(shoppingList =>
@@ -90,13 +89,13 @@ function ShoppingListCollectionView(props: Props) {
           >
             <View style={style.cardTextContainer}>
               <Text style={style.text}>{shoppingList.name}</Text>
-              <View style={combine(style.rowItemsContainer, { gap: 12 })}>
+              <View style={style.rowItemsContainerGap12}>
                 <Text style={style.subText}>{new DateOnly(shoppingList.dateCreated).toString(false)}</Text>
                 <Text style={style.subText}>#{shoppingList.id}</Text>
                 <Text style={style.subText}>Produktów: {shoppingList.itemsCount}</Text>
               </View>
             </View>
-            <View style={combine(style.cardButtonsContainer, {width: 70})}>
+            <View style={style.cardButtonsContainerWidth70}>
               {!readonly && (
                 <>
                   {!shoppingList.archived && (

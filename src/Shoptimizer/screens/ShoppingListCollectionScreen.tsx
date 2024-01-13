@@ -20,6 +20,7 @@ import DateOnly from "../models/DateOnly";
 import { Backend } from "../logic/backend";
 import { ShopPreview } from "../models/ShopModels";
 import ShoppingListCollectionView from "../components/ShoppingListCollectionView";
+import HeaderButton from "../components/HeaderButton";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Shopping Lists">;
 
@@ -93,7 +94,6 @@ function ShoppingListCollectionScreen(props: Props) {
   }, [setCreateShoppingListButtonDisabled]);
 
   const navigateToShoppingList = useCallback((shoppingList: ShoppingListPreview) => {
-    console.log(`Navigating!, ShoppingLIst=${shoppingList.id}`)
     return navigation.navigate({
       name: "Shopping List",
       params: {
@@ -105,18 +105,12 @@ function ShoppingListCollectionScreen(props: Props) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <View style={style.cardButtonsContainer}>
-          <MyButton
-            containerStyle={{ marginRight: 8 }}
-            size={36}
-            backgroundColor="#00000000"
+        <View style={style.headerButtonsContainer}>
+          <HeaderButton
             onPress={refreshList}
             iconType={"refresh"}
           />
-          <MyButton
-            containerStyle={{ marginRight: 8 }}
-            size={36}
-            backgroundColor="#00000000"
+          <HeaderButton
             onPress={() => showModal(true)}
             iconType={"add"}
           />
@@ -166,7 +160,7 @@ function ShoppingListCollectionScreen(props: Props) {
                 onChange={(shop: ShopPreview) => setNewShoppingListShopId(shop.id)}
               />
             ) : (
-              <ActivityIndicator style={{ margin: 8 }} size={"large"}/>
+              <ActivityIndicator style={style.margin8} size={"large"}/>
             )}
           </View>
           

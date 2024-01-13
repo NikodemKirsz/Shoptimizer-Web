@@ -8,7 +8,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
 function SettingsScreen(props: Props) {
   const {style, color} = useStyles();
-  
+
   return (
     <View style={style.container}>
       <Text>Settings</Text>

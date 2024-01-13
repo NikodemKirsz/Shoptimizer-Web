@@ -36,7 +36,7 @@ function MyModal(props: MyModalProps) {
       <Pressable
         style={combine(style.modalBackground,
           dim && { backgroundColor: '#141a1fA0' },
-          center && { justifyContent: 'center' }
+          center && { justifyContent: 'center', alignItems: 'center' }
         )}
         onPressOut={close}
       >

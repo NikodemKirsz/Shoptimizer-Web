@@ -1,10 +1,30 @@
-﻿import { StyleSheet, ViewStyle } from "react-native";
+﻿import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { GlobalColors } from "./Themes/Themes";
 
-const fullSize: ViewStyle = {
+type Style = ViewStyle | TextStyle;
+
+const fullSize: Style = {
   width: "100%",
   height: "100%",
-}
+};
+
+const fullContainer: Style = {
+  ...fullSize,
+  alignItems: "center",
+};
+
+const fullRow: Style = {
+  width: '100%',
+  flexDirection: 'row',
+  alignItems: 'center',
+};
+
+const cardButtonsContainer: Style = {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  gap: 8,
+};
 
 const getStyles = (colors: GlobalColors) => ({
   color: colors,
@@ -18,23 +38,16 @@ const getStyles = (colors: GlobalColors) => ({
       alignItems: 'center',
       padding: 8,
     },
-    fullContainer: {
-      ...fullSize,
-      alignItems: 'center',
+    fullContainer: fullContainer,
+    fullContainerPad16: {
+      ...fullContainer,
+      padding: 16,
     },
     input: {
       height: "100%",
       padding: 8,
       borderColor: colors.background,
       borderWidth: 2,
-    },
-    headerButton: {
-      flex: 1,
-      backgroundColor: "#888888",
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '80%',
-      padding: 16,
     },
     button: {
       borderRadius: 15,
@@ -72,17 +85,36 @@ const getStyles = (colors: GlobalColors) => ({
       fontSize: 24,
       color: colors.text,
     },
+    text18: {
+      fontSize: 18,
+      color: colors.text,
+    },
     text20: {
       fontSize: 20,
+      color: colors.text,
+    },
+    text32: {
+      fontSize: 32,
       color: colors.text,
     },
     subText: {
       fontSize: 16,
       color: colors.subText,
     },
+    subText12: {
+      fontSize: 12,
+      color: colors.subText,
+    },
+    categoryTitleText: {
+      fontSize: 28,
+      color: colors.text,
+      fontStyle: "italic",
+      textAlign: "center",
+    },
     titleContainer: {
       width: '100%',
       alignItems: 'center',
+      justifyContent: "center",
     },
     cardTextContainer: {
       width: "auto",
@@ -91,23 +123,35 @@ const getStyles = (colors: GlobalColors) => ({
       justifyContent: 'center',
       marginRight: 5,
     },
-    cardButtonsContainer: {
+    headerButtonsContainer: {
       flexDirection: "row",
-      alignItems: "center",
       justifyContent: "flex-end",
-      gap: 8,
+    },
+    cardButtonsContainerWidth70: {
+      ...cardButtonsContainer,
+      width: 70,
+    },
+    cardButtonsContainerWidth116: {
+      ...cardButtonsContainer,
+      width: 116,
     },
     rowButtonContainer: {
-      width: '100%',
-      flexDirection: 'row',
+      ...fullRow,
       justifyContent: "space-evenly",
       borderRadius: 4,
     },
     rowItemsContainer: {
-      width: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
+      ...fullRow,
       gap: 4,
+    },
+    rowItemsContainerGap12: {
+      ...fullRow,
+      gap: 12,
+    },
+    subtitleTextsContainer: {
+      ...fullRow,
+      justifyContent: "center",
+      gap: 16,
     },
     amounterContainer: {
       flex: 1,
@@ -160,7 +204,11 @@ const getStyles = (colors: GlobalColors) => ({
     },
     productHintView: {
       width: "96%",
-      height: "20%",
+      flex: 1,
+    },
+    shopContainerView: {
+      width: "100%",
+      flex: 3,
     },
     productHintContainerView: {
       padding: 8,
@@ -172,6 +220,15 @@ const getStyles = (colors: GlobalColors) => ({
     fullSize: {
       ...fullSize,
     },
+    headerButton: {
+      marginRight: 0,
+    },
+    margin8: {
+      margin: 8,
+    },
+    margin20: {
+      margin: 20,
+    }
   })
 });
 

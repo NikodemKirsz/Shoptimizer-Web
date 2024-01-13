@@ -41,11 +41,11 @@ function ShoppingItemView(props: ShoppingItemViewProps) {
 
   return (
     <View style={style.card}>
-      <View style={combine(style.cardTextContainer, { maxWidth: "60%" })}>
-        <Text style={combine(style.text, { fontSize: 20 })}>{shoppingItem.product.name}</Text>
+      <View style={combine(style.cardTextContainer, { maxWidth: readonly ? "100%" : "60%" })}>
+        <Text style={style.text20}>{shoppingItem.product.name}</Text>
       </View>
       {!readonly && (
-        <View style={combine(style.cardButtonsContainer, { width: 116 })}>
+        <View style={style.cardButtonsContainerWidth116}>
           <Amounter
             value={count}
             setValue={onChangeCount}
