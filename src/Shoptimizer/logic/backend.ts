@@ -10,7 +10,7 @@ export abstract class Backend {
   static readonly remoteHost = "https://shoptimizer-api.azurewebsites.net/";
   
   static readonly apiClient = axios.create({
-    baseURL: Backend.localHost,
+    baseURL: Backend.remoteHost,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

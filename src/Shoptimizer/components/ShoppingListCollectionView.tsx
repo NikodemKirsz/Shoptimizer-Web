@@ -13,7 +13,7 @@ type Props = {
   refreshListToggle?: boolean;
   readonly?: boolean;
   includeArchived?: boolean;
-} 
+}
 
 function ShoppingListCollectionView(props: Props) {
   const {color, style} = useStyles();
@@ -22,8 +22,8 @@ function ShoppingListCollectionView(props: Props) {
   refreshListToggle ??= true;
   readonly ??= true;
   includeArchived ??= true;
-  
-  const [shoppingListPreviews, setShoppingListPreviews] = useState<ShoppingListPreview[]>([]);
+
+  const [shoppingListPreviews, setShoppingListPreviews] = useState<ShoppingListPreview[]>();
   const [refreshToggle, setRefreshToggle] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -32,7 +32,7 @@ function ShoppingListCollectionView(props: Props) {
 
     (async () => {
       setRefreshing(true);
-      setShoppingListPreviews([]);
+      setShoppingListPreviews(undefined);
       const shoppingListsResponse = await Backend.getShoppingListPreviewsForUser(
         1,
         includeArchived!,
@@ -48,7 +48,7 @@ function ShoppingListCollectionView(props: Props) {
 
   const deleteShoppingList = useCallback(async (id: number) => {
     setShoppingListPreviews(
-      old => old.filter(shoppingList => shoppingList.id != id)
+      old => old?.filter(shoppingList => shoppingList.id != id)
     );
 
     await Backend.deleteShoppingList(id);
@@ -56,71 +56,72 @@ function ShoppingListCollectionView(props: Props) {
 
   const archiveShoppingList = useCallback(async (id: number) => {
     setShoppingListPreviews(
-      old => {
-        const index = old.findIndex(shoppingList => shoppingList.id === id)
-        if (index < 0)
-          return old;
-
-        const modifiedElement = old[index];
-        modifiedElement.archived = true;
-
-        return [...old.slice(0, index), modifiedElement, ...old.slice(index + 1)];
-      }
+      old => old?.update(
+        shoppingList => shoppingList.id === id,
+        element => element.archived = true
+      )
     );
 
     await Backend.archiveShoppingList(id);
   }, [setShoppingListPreviews]);
-  
+
   const onRefresh = useCallback(() => setRefreshToggle(old => !old), [setRefreshToggle]);
 
-  const archivedCardStyle = combine(style.card, { opacity: 0.6 });
-  
+  const archivedCardStyle = combine(style.card, {opacity: 0.6});
+
   return (
     <ScrollView
       style={style.scrollExtendedView}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["green"]}/>}
     >
       {shoppingListPreviews ? (
-        shoppingListPreviews.map(shoppingList =>
-          <MyPressable
-            key={`ShoppingListCollectionItem-${shoppingList.id}`}
-            style={!shoppingList.archived ? style.card : archivedCardStyle}
-            onPress={() => onShoppingListPress(shoppingList)}
-          >
-            <View style={style.cardTextContainer}>
-              <Text style={style.text}>{shoppingList.name}</Text>
-              <View style={style.rowItemsContainerGap12}>
-                <Text style={style.subText}>{new DateOnly(shoppingList.dateCreated).toString(false)}</Text>
-                <Text style={style.subText}>#{shoppingList.id}</Text>
-                <Text style={style.subText}>Produktów: {shoppingList.itemsCount}</Text>
+        shoppingListPreviews.length > 0 ? (
+          shoppingListPreviews.map(shoppingList =>
+            <MyPressable
+              key={`ShoppingListCollectionItem-${shoppingList.id}`}
+              style={!shoppingList.archived ? style.card : archivedCardStyle}
+              onPress={() => onShoppingListPress(shoppingList)}
+            >
+              <View style={style.cardTextContainer}>
+                <Text style={style.text}>{shoppingList.name}</Text>
+                <View style={style.rowItemsContainerGap12}>
+                  <Text style={style.subText}>{new DateOnly(shoppingList.dateCreated).toString(false)}</Text>
+                  <Text style={style.subText}>#{shoppingList.id}</Text>
+                  <Text style={style.subText}>Produktów: {shoppingList.itemsCount}</Text>
+                </View>
               </View>
-            </View>
-            <View style={style.cardButtonsContainerWidth70}>
-              {!readonly && (
-                <>
-                  {!shoppingList.archived && (
+              <View style={style.cardButtonsContainerWidth70}>
+                {!readonly && (
+                  <>
+                    {!shoppingList.archived && (
+                      <MyButton
+                        backgroundColor={'orange'}
+                        iconType={'done'}
+                        size={34}
+                        onPress={() => archiveShoppingList(shoppingList.id)}
+                      />
+                    )}
                     <MyButton
-                      backgroundColor={'orange'}
-                      iconType={'done'}
+                      backgroundColor={'red'}
+                      iconType={'close'}
                       size={34}
-                      onPress={() => archiveShoppingList(shoppingList.id)}
-                    />)}
-                  <MyButton
-                    backgroundColor={'red'}
-                    iconType={'close'}
-                    size={34}
-                    onPress={() => deleteShoppingList(shoppingList.id)}
-                  />
-                </>
-              )}
-            </View>
-          </MyPressable>
+                      onPress={() => deleteShoppingList(shoppingList.id)}
+                    />
+                  </>
+                )}
+              </View>
+            </MyPressable>
+          )
+        ) : (
+          <View style={style.fullContainerPad16}>
+            <Text style={style.text18}>Nie masz jeszcze żadnej listy zakupowej</Text>
+          </View>
         )
       ) : (
-        <ActivityIndicator style={{margin: 20}} size={"large"} />
+        <ActivityIndicator style={style.margin20} size={"large"}/>
       )}
-    </ScrollView> 
-  ); 
+    </ScrollView>
+  );
 }
 
 export default ShoppingListCollectionView;

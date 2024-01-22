@@ -141,7 +141,9 @@ function ShoppingListScreen(props: Props) {
               />
             )
           ) : (
-            <Text>Lista zakupowa jest pusta</Text>
+            <View style={style.fullContainerPad16}>
+              <Text style={style.text18}>Lista zakupowa jest pusta</Text>
+            </View>
           )}
         </ScrollView>
       ) : (
