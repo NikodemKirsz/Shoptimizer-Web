@@ -89,6 +89,9 @@ function ShoppingListCollectionView(props: Props) {
                   <Text style={style.subText}>#{shoppingList.id}</Text>
                   <Text style={style.subText}>Produktów: {shoppingList.itemsCount}</Text>
                 </View>
+                <View style={style.rowItemsContainer}>
+                  <Text style={style.text16}>{shoppingList.shopPreview.name}, {shoppingList.shopPreview.address}</Text>
+                </View>
               </View>
               <View style={style.cardButtonsContainerWidth70}>
                 {!readonly && (

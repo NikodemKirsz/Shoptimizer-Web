@@ -85,6 +85,10 @@ const getStyles = (colors: GlobalColors) => ({
       fontSize: 24,
       color: colors.text,
     },
+    text16: {
+      fontSize: 16,
+      color: colors.text,
+    },
     text18: {
       fontSize: 18,
       color: colors.text,

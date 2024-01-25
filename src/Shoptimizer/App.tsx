@@ -22,7 +22,7 @@ enableScreens();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   
   return (
     <NavigationContainer theme={isDarkTheme ? DarkTheme : LightTheme}>

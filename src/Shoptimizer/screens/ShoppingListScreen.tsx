@@ -28,6 +28,7 @@ function ShoppingListScreen(props: Props) {
   const {style, color} = useStyles();
   
   const shoppingListId = shoppingListPreview.id;
+  const shopPreview = shoppingListPreview.shopPreview;
   
   const [screenHeight, _] = useState(Dimensions.get('screen').height);
   const [shoppingList, setShoppingList] = useState<ShoppingList>();
@@ -127,6 +128,9 @@ function ShoppingListScreen(props: Props) {
             <View style={style.subtitleTextsContainer}>
               <Text style={style.subText}>ID: {shoppingList.id}</Text>
               <Text style={style.subText}>Utworzono: {new DateOnly(shoppingList.dateCreated).toString(false)}</Text>
+            </View>
+            <View style={style.subtitleTextsContainer}>
+              <Text style={style.text16}>{shopPreview.name}, {shopPreview.address}</Text>
             </View>
           </View>
           
