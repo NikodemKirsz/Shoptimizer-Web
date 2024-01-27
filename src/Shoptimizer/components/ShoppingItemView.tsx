@@ -41,7 +41,7 @@ function ShoppingItemView(props: ShoppingItemViewProps) {
 
   return (
     <View style={style.card}>
-      <View style={combine(style.cardTextContainer, { maxWidth: readonly ? "100%" : "60%" })}>
+      <View style={style.cardTextContainer}>
         <Text style={style.text20}>{shoppingItem.product.name}</Text>
       </View>
       {!readonly && (

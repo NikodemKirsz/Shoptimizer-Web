@@ -123,6 +123,7 @@ const getStyles = (colors: GlobalColors) => ({
     cardTextContainer: {
       width: "auto",
       height: "auto",
+      flexShrink: 1,
       overflow: "visible",
       justifyContent: 'center',
       marginRight: 5,

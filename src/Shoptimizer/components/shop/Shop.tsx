@@ -77,7 +77,7 @@ function Shop(props: ShopProps) {
                 />
               ))}
 
-              {floor.checkouts && floor.checkouts.map(checkout => (
+              {floor.checkouts.map(checkout => (
                 <Checkout
                   key={`ShopCheckout-${checkout.number}`}
                   checkout={checkout}
@@ -85,7 +85,7 @@ function Shop(props: ShopProps) {
                 />
               ))}
 
-              {floor.roads && floor.roads.map(road => (
+              {floor.roads.map(road => (
                 <Road
                   key={`ShopRoad-${road.number}`}
                   road={road}

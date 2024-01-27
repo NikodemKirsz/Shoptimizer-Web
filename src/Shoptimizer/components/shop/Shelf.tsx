@@ -64,8 +64,8 @@ function Shelf(props: ShelfProps) {
         top: positionPercent.top,
       }}
     >
-      {false && <Text style={combine(style.text, { alignSelf: "center", fontSize: 18 })}>{number}</Text>}
-      {sections.length > 0 && sections.map((section) => (
+      {false  && <Text style={combine(style.text, { alignSelf: "center", fontSize: 18 })}>{number}</Text>}
+      {sections.map((section) => (
         <Section
           key={`ShelfSection-${section.number}`}
           section={section}
