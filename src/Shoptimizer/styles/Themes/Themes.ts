@@ -1,21 +1,22 @@
 ﻿import { Theme } from "@react-navigation/native";
+import { ColorValue } from "react-native";
 
 interface GlobalColors {
   primary: string,
   background: string,
   card: string,
-  listItem: string,
-  darkerListItem: string,
+  listItem: ColorValue,
+  darkerListItem: ColorValue,
   text: string,
-  subText: string,
+  subText: ColorValue,
   border: string,
   notification: string,
-  placeholder: string,
-  descriptionText: string,
-  buttonBackground: string,
-  strongAccent: string,
-  lightAccent: string,
-  transparent: string,
+  placeholder: ColorValue,
+  descriptionText: ColorValue,
+  buttonBackground: ColorValue,
+  strongAccent: ColorValue,
+  lightAccent: ColorValue,
+  transparent: ColorValue,
 }
 
 interface GlobalTheme extends Theme {

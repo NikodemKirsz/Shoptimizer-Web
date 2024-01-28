@@ -70,7 +70,6 @@ const getStyles = (colors: GlobalColors) => ({
       margin: 14,
     },
     card: {
-      flex: 1,
       flexDirection: 'row',
       justifyContent: "space-between",
       width: '100%',
@@ -111,6 +110,7 @@ const getStyles = (colors: GlobalColors) => ({
     },
     categoryTitleText: {
       fontSize: 28,
+      paddingHorizontal: 8,
       color: colors.text,
       fontStyle: "italic",
       textAlign: "center",
@@ -233,6 +233,10 @@ const getStyles = (colors: GlobalColors) => ({
     },
     margin20: {
       margin: 20,
+    },
+    justifyCenter: {
+      justifyContent: "center",
+      alignItems: "center",
     }
   })
 });

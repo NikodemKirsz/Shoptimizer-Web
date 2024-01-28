@@ -1,21 +1,36 @@
-﻿import { Text, View } from "react-native";
+﻿import { Switch, SwitchChangeEvent, Text, View } from "react-native";
 import { useStyles } from "../hooks";
-import { Icon } from "../components/Icon";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../models/NavigationData";
+import { useCallback, useContext, useState } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Settings">;
 
 function SettingsScreen(props: Props) {
   const {style, color} = useStyles();
 
+  const {isDarkTheme, setIsDarkTheme} = useContext(ThemeContext);
+  const [isDarkThemeInternal, setIsDarkThemeInternal] = useState<boolean>(isDarkTheme);
+
+  const setDarkMode = useCallback((isDarkMode: boolean) => {
+    setIsDarkThemeInternal(isDarkMode);
+    setIsDarkTheme(isDarkMode);
+  }, [setIsDarkTheme]);
+
   return (
     <View style={style.container}>
-      <Text>Settings</Text>
-      <Icon name={"close"} size={40} color={'white'}/>
-      <Icon name={"add"} size={40} color={'white'}/>
-      <Icon name={"done"} size={40} color={'white'}/>
-      <Icon name={"remove"} size={40} color={'white'}/>
+      <View style={style.card}>
+        <View style={style.justifyCenter}>
+          <Text style={style.text}>{"Ciemny motyw"}</Text>
+        </View>
+        <View>
+          <Switch
+            value={isDarkThemeInternal}
+            onValueChange={setDarkMode}
+          />
+        </View>
+      </View>
     </View>
   );
 }

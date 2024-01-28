@@ -57,7 +57,7 @@ function Shelf(props: ShelfProps) {
         backgroundColor: color.listItem,
         borderWidth: 2,
         borderStyle: "solid",
-        borderColor: color.card,
+        borderColor: color.border,
         width: dimensionsPercent.width,
         height: dimensionsPercent.height,
         left: positionPercent.left,

@@ -34,7 +34,7 @@ function Floor(props: FloorProps) {
         backgroundColor: color.background,
         borderWidth: 4,
         borderStyle: "solid",
-        borderColor: color.card,
+        borderColor: color.border,
         width: absoluteWidth,
         height: absoluteHeight,
       }}

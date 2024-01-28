@@ -10,7 +10,7 @@ const DarkTheme = {
     darkerListItem: '#1a2533',
     text: '#fbfefe',
     subText: '#c0bfbf',
-    border: '#272729',
+    border: '#38577e',
     notification: '#FF453A',
     placeholder: '#82858a',
     descriptionText: '#9cabc2', 
