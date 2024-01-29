@@ -4,10 +4,10 @@ const LightTheme = {
   dark: false,
   colors: {
     primary: '#007AFF',
-    background: '#eeeeee',
+    background: '#dddddd',
     card: '#ffffff',
     listItem: '#ffffff',
-    darkerListItem: '#ffffff',
+    darkerListItem: '#eeeeee',
     text: '#022152',
     subText: '#0049ad',
     border: '#a7b5ce',

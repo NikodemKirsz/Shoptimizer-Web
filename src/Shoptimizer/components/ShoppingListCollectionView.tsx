@@ -71,7 +71,7 @@ function ShoppingListCollectionView(props: Props) {
 
   return (
     <ScrollView
-      style={style.scrollExtendedView}
+      contentContainerStyle={style.scrollExtendedView}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["green"]}/>}
     >
       {shoppingListPreviews ? (

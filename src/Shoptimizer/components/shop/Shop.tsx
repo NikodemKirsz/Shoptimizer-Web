@@ -21,6 +21,10 @@ function Shop(props: ShopProps) {
   const [containerDimensions, setContainerDimensions] = useState<RectDimensions>();
   const [selectedSection, setSelectedSection] = useState<ShelfSection | null>(null);
 
+  useEffect(() => {
+    setSelectedSection(null);
+  }, [id]);
+
   const onLayoutChange = useCallback((event: LayoutChangeEvent) => {
     const {width, height} = event.nativeEvent.layout;
     setContainerDimensions({
@@ -48,8 +52,8 @@ function Shop(props: ShopProps) {
             <View style={style.titleContainer}>
               <Text style={style.categoryTitleText}>{selectedSection.categoryName}</Text>
             </View>
-            {selectedSection.shoppingProducts.map((item, i) => (
-              <Text key={i} style={style.text18}>{item.name}</Text>
+            {selectedSection.shoppingProducts.map((item) => (
+              <Text key={item.id} style={style.text18}>{item.name}</Text>
             ))}
           </TouchableOpacity>
         )}

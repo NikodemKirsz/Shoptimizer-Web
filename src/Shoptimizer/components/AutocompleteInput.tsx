@@ -42,6 +42,12 @@ function AutocompleteInput<TItem extends ItemBase>(props: AutocompleteInputProps
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
+    if (inputRef.current){
+      inputRef.current.focus();
+    }
+  }, [inputRef.current]);
+
+  useEffect(() => {
     if (debouncedInput.length < 3) {
       setItems([]);
       return;

@@ -122,7 +122,7 @@ function ShoppingListScreen(props: Props) {
   return (
     <>
       {!!shoppingList && !!shoppingItems ? (
-        <ScrollView style={style.scrollExtendedView}>
+        <ScrollView contentContainerStyle={style.scrollExtendedView}>
           <View style={style.titleContainer}>
             <Text style={style.text32}>{shoppingList.name}</Text>
             <View style={style.subtitleTextsContainer}>
