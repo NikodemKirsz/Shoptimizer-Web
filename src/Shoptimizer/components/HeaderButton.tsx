@@ -17,7 +17,7 @@ function HeaderButton(props: Props) {
     <MyButton
       containerStyle={style.headerButton}
       size={36}
-      backgroundColor="#00000000"
+      backgroundColor={color.transparent}
       onPress={onPress}
       iconType={iconType}
       disabled={disabled}

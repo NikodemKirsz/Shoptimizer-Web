@@ -67,7 +67,7 @@ function ShoppingListCollectionView(props: Props) {
 
   const onRefresh = useCallback(() => setRefreshToggle(old => !old), [setRefreshToggle]);
 
-  const archivedCardStyle = combine(style.card, {opacity: 0.6});
+  const archivedCardStyle = combine(style.card, { opacity: 0.6 });
 
   return (
     <ScrollView

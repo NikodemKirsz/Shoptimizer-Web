@@ -1,6 +1,6 @@
 ﻿import { GlobalTheme } from "./Themes";
 
-const DarkTheme = {
+const DarkTheme: GlobalTheme = {
   dark: true,
   colors: {
     primary: '#0A84FF',

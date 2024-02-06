@@ -1,6 +1,6 @@
 ﻿import { GlobalTheme } from "./Themes";
 
-const LightTheme = {
+const LightTheme: GlobalTheme = {
   dark: false,
   colors: {
     primary: '#007AFF',
